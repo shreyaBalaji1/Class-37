@@ -1,44 +1,44 @@
-var ball, database, position;
+var database;
+var gameState = 0;
+var playerCount;
+var form, player, game;
 
 function setup(){
     database = firebase.database();
     createCanvas(500,500);
-    ball = createSprite(250,250,10,10);
-    ball.shapeColor = "red";
-    var read = database.ref("Ball/Position");
-    read.on("value",readVal,showErr);
+    
+    game = new Game();
+    game.getState();
+    game.start();
 }
 
 function draw(){
     background("white");
-    if(keyDown(LEFT_ARROW)){
-        writePosition(-1,0);
-    }
-    else if(keyDown(RIGHT_ARROW)){
-        writePosition(1,0);
-    }
-    else if(keyDown(UP_ARROW)){
-        writePosition(0,-1);
-    }
-    else if(keyDown(DOWN_ARROW)){
-        writePosition(0,+1);
-    }
-    drawSprites();
+  
 }
 
-function writePosition(x,y){
-    database.ref("Ball/Position").set({
-        x: position.x+x,
-        y: position.y+y
-    });
-}
 
-function readVal(data) {
-    position = data.val();
-    ball.x = position.x;
-    ball.y = position.y;
-}
 
-function showErr() {
-    console.log("WARNING");
-}
+/*
+OBJECT ORIENTED PROGRAMMING (OOP)
+
+3 objects:
+    1. Form: 
+        - input box
+        - play button
+        - button is pressed ---> player's name should be registered in the database
+            - new player object should be created
+    
+    2. Player:
+        - Information
+            - name
+            - rank
+            - distance
+        - Read & write player info to the database - name, player count
+
+    3. Game:
+        - gameStates
+        WAIT (0) - display the form
+        PLAY (1) - play the game
+        END (2)
+*/
