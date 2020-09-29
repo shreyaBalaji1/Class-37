@@ -26,15 +26,17 @@ class Game{
                 playerCount = pcref.val();
                 player.getCount();
             }
-            
-
             //New form object
             form = new Form();
 
             //form display
             form.display();
-
         }
+        car1 = createSprite(100,200);
+        car2 = createSprite(300,200);
+        car3 = createSprite(500,200);
+        car4 = createSprite(700,200);
+        cars = [car1, car2, car3, car4];
     }
 
     play(){
@@ -46,8 +48,12 @@ class Game{
         if(allPlayers !== undefined) {
             var text_pos = 130;
             //text(player name : player distance)
+            var index = 0;
+            var x = 0, y;
             for(var i in allPlayers) {
-
+                
+            
+                /*
                 //Identifying currently active player
                 if(i === "player" + player.index){
                     fill("red");
@@ -59,6 +65,22 @@ class Game{
                 text_pos = text_pos + 20;
                 textSize(15);
                 text(allPlayers[i].name + ": " + allPlayers[i].distance, 120, text_pos);
+                */
+
+                index++;
+                x = x+200;
+                y = displayHeight-allPlayers[i].distance;
+
+                cars[index-1].x = x; 
+                cars[index-1].y = y;
+                
+                //Currently active car ---> Colour of the car
+                if(index === player.index) {
+                    cars[index-1].shapeColor = "red";
+                    camera.position.x = displayWidth/2;
+                    camera.position.y = cars[index-1].y;
+                }
+                
             }
         }
     
@@ -66,7 +88,7 @@ class Game{
             player.distance = player.distance+50;
             player.update();   
         }
-
+        drawSprites();
     }
 }
 
@@ -82,6 +104,11 @@ for(var i = 0; i < array.length; i++){}
 for/in statement
 
 for(var i in array){}
+
+
+for(var index=0; index < 4; index++){
+    //carssssss
+}
 */
 
 
